@@ -14,9 +14,11 @@ def escape_markdown_characters(text):
     escaped_text = text.replace("\\", "\\\\").replace("_", "\\_").replace("#", "\\#").replace("`", "\\`")
     return escaped_text
 
-def create_folder_structure_illustration(root_path, extensions):
+def create_folder_structure_illustration(root_path, extensions, skip_folders):
     tree = ""
     for path in sorted(root_path.rglob('*')):
+        if any(skip_folder in path.parts for skip_folder in skip_folders):
+            continue
         if path.is_dir():
             depth = len(path.relative_to(root_path).parts)
             indent = '    ' * depth
@@ -27,10 +29,12 @@ def create_folder_structure_illustration(root_path, extensions):
             tree += f"{indent}{path.name}\n"
     return tree
 
-def merge_files(extensions, root_path):
+def merge_files(extensions, root_path, skip_folders):
     content = ""
     for ext in extensions:
         for file_path in root_path.rglob(f"*.{ext}"):
+            if any(skip_folder in file_path.parts for skip_folder in skip_folders):
+                continue
             try:
                 file_path_str = str(file_path)
                 escaped_file_path = escape_markdown_characters(file_path_str)
@@ -98,12 +102,15 @@ def main():
     parser = argparse.ArgumentParser(description="Merge files with specified extensions.")
     parser.add_argument("-e", "--extensions", nargs="*", help="List of file extensions to merge.")
     parser.add_argument("-f", "--filename", help="Name of the output file (default: merged.md).")
+    parser.add_argument("-s", "--skip-folders", nargs="*", help="List of folder names to skip.")
     args = parser.parse_args()
 
     extensions = args.extensions or DEFAULT_EXTENSIONS
+    skip_folders = args.skip_folders or []
     root_path = Path.cwd()
-    folder_structure = create_folder_structure_illustration(root_path, extensions)
-    content = merge_files(extensions, root_path)
+
+    folder_structure = create_folder_structure_illustration(root_path, extensions, skip_folders)
+    content = merge_files(extensions, root_path, skip_folders)
 
     full_content = f"## Project Structure\n```\n{folder_structure}```\n{content}"
     

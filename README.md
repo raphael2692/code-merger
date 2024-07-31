@@ -1,4 +1,4 @@
-## code-merger
+# code-merger
 
 ![Code Merger](https://img.shields.io/badge/language-python-blue) ![version](https://img.shields.io/badge/version-1.0-brightgreen) ![license](https://img.shields.io/badge/license-MIT-blue)
 
@@ -10,6 +10,7 @@
 
 - Support for a wide range of file extensions.
 - Automatic generation of project folder structure.
+- Ability to skip specified folders.
 - File contents are seamlessly merged and formatted in Markdown.
 - Output can be saved to a file or copied directly to the clipboard.
 
@@ -40,13 +41,14 @@ code-merger is simple to use right from your command line.
 ### Command-Line Interface
 
 ```sh
-merge [-e EXTENSIONS] [-f FILENAME]
+merge [-e EXTENSIONS] [-f FILENAME] [-s SKIP_FOLDERS]
 ```
 
 ### Options
 
-- `-e`, `--extensions`: List of file extensions to merge. Defaults to a comprehensive list of common coding languages. If not specified, scans for all supported exstensions.
+- `-e`, `--extensions`: List of file extensions to merge. Defaults to a comprehensive list of common coding languages. If not specified, scans for all supported extensions.
 - `-f`, `--filename`: Name of the output file. If omitted, the merged content will be copied to the clipboard.
+- `-s`, `--skip-folders`: List of folder names to skip during the merge process.
 
 ## 📌 Examples
 
@@ -60,6 +62,12 @@ merge -e py js html
 
 ```sh
 merge -e py js html -f merged_documentation.md
+```
+
+### Skip Specific Folders
+
+```sh
+merge -e py js html -s node_modules .git
 ```
 
 ### Use Default Extensions and Copy to Clipboard
@@ -104,14 +112,3 @@ We welcome contributions! If you have any ideas, suggestions, or improvements, f
 ## 📧 Contact
 
 For any questions, feel free to reach out.
-
-<!-- ## 📄 Acknowledgments
-
-Special thanks to all the contributors and users for making this project better. -->
-
----
-<br>
-<!-- Elevate your project documentation with **code-merger**! -->
-
-[![GitHub stars](https://img.shields.io/github/stars/your-username/code-merger.svg?style=social&label=Star&maxAge=2592000)](https://GitHub.com/your-username/code-merger/stargazers/)
-[![GitHub forks](https://img.shields.io/github/forks/your-username/code-merger.svg?style=social&label=Fork&maxAge=2592000)](https://GitHub.com/your-username/code-merger/fork/)
