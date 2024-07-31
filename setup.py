@@ -6,7 +6,7 @@ long_description = (this_directory / "README.md").read_text(encoding='utf-8')
 
 setup(
     name='code-merger',
-    version='1.0.0',
+    version='1.0.1',
     author="Raffaele Spataro",
     author_email="raffaele2692@gmail.com", 
     description="A tool for merging code files into a single markdown document.",
